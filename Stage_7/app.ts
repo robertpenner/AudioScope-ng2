@@ -18,15 +18,11 @@ import {renderAudioFile} from "renderAudio";
 	directives: [NgFor]
 })
 class MyDisplay {
-	displayPoints: string;
-	selected: string;
-	items: string[];
-	scale: number;
+	displayPoints = "";
+	selected = "tada.wav";
+	items = items;
+	scale = 1;
 	constructor() {
-		this.selected = "tada.wav";
-		this.items = items;
-		this.displayPoints = "";
-		this.scale = 1;
 		this.renderWave();
 	}
 	updateSelect(selected: string) {
@@ -36,22 +32,22 @@ class MyDisplay {
 	increaseScale() {
 		if (this.scale < 11) {
 			this.scale++;
+			this.renderWave();
 		}
-		this.renderWave();
 	}
 	decreaseScale() {
 		if (this.scale > 1) {
 			this.scale--;
+		  this.renderWave();
 		}
-		this.renderWave();
 	}
 	renderWave() {
 		if (!this.selected) return;
 		console.log("About to draw: " + "data/" + this.selected);
-		var waveFile = loadFile("data/" + this.selected);
-		var c = { width: 500, height: 300 };
+		const waveFile = loadFile("data/" + this.selected);
+		const c = { width: 500, height: 300 };
 
-	    var scaleFactor = 3.0 * this.scale;
+		const scaleFactor = 3.0 * this.scale;
 		
 		this.displayPoints = renderAudioFile(waveFile, scaleFactor, c);
 	}
@@ -63,7 +59,7 @@ function preload(myItems: string[]) {
 		bootstrap(MyDisplay);
 	}
 	else {
-		var current = myItems.shift();
+		const current = myItems.shift();
 		preloadFile("data/" + current, function() { preload(myItems) });
 	}
 } 
